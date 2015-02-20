@@ -32,6 +32,7 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'wincent/command-t'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'bling/vim-airline'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
