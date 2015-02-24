@@ -29,10 +29,11 @@ Bundle 'garbas/vim-snipmate'
 Bundle 'honza/vim-snippets'
 Bundle 'craigemery/vim-autotag'
 Plugin 'kchmck/vim-coffee-script'
-Plugin 'wincent/command-t'
+Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'bling/vim-airline'
+"Plugin 'jistr/vim-nerdtree-tabs'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -40,6 +41,7 @@ filetype plugin indent on    " required
 let mapleader="."
 
 map <C-t> :NERDTreeToggle<CR>
+"map <C-t> <plug>:NERDTreeTabsToggle<CR>
 
 nmap <silent> <C-Up> :wincmd k<CR>
 nmap <silent> <C-Down> :wincmd j<CR>
