@@ -1,11 +1,13 @@
 set nocompatible              " be iMproved, required
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set number
-set noexpandtab
+set expandtab
 filetype off                  " required
 
 syntax on
+
+autocmd BufWritePre *.rb :%s/\s\+$//e
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -33,6 +35,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'bling/vim-airline'
+Plugin 'astashov/vim-ruby-debugger'
 "Plugin 'jistr/vim-nerdtree-tabs'
 
 call vundle#end()            " required
@@ -81,3 +84,5 @@ map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
 
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%121v.\+/
