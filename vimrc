@@ -36,6 +36,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'bling/vim-airline'
 Plugin 'astashov/vim-ruby-debugger'
+Plugin 'vim-scripts/AutoComplPop'
 "Plugin 'jistr/vim-nerdtree-tabs'
 
 call vundle#end()            " required
@@ -43,8 +44,14 @@ filetype plugin indent on    " required
 
 let mapleader="."
 
+" Vim ruby debugger
+"let g:ruby_debugger_progname = 'vim'
+"let g:ruby_debugger_debug_mode = 1
+
+" NERDTree
 map <C-t> :NERDTreeToggle<CR>
 "map <C-t> <plug>:NERDTreeTabsToggle<CR>
+"let g:NERDTreeDirArrows=0
 
 nmap <silent> <C-Up> :wincmd k<CR>
 nmap <silent> <C-Down> :wincmd j<CR>
@@ -84,5 +91,9 @@ map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
 
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%121v.\+/
+"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+"match OverLength /\%121v.\+/
+"
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1 
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
