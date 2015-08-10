@@ -1,7 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='/Users/sage/practices/test_engine/spec/dummy/config'
-let g:netrw_dirhist_2='/Users/sage/.vim'
-let g:netrw_dirhist_3='/Volumes/MacintoshHD2/Development/sage_one_advanced/advanced_uk/config'
-let g:netrw_dirhist_4='/Volumes/MacintoshHD2/Development/sage_one_advanced/guides/gac_release_notes'
-let g:netrw_dirhist_5='/Volumes/MacintoshHD2/Development/sage_one_advanced'
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/Users/miquel/Development/cashbook/sage_one_advanced/advanced_uk/app'
+let g:netrw_dirhist_2='/Users/miquel/Development/cashbook/sage_one_advanced/advanced_uk/app/models'
+let g:netrw_dirhist_3='/Users/miquel/Development/cashbook/sage_one_advanced/advanced_uk/app/models/advanced_uk'

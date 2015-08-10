@@ -3,6 +3,9 @@ set tabstop=2
 set shiftwidth=2
 set number
 set expandtab
+
+set clipboard=unnamed
+
 filetype off                  " required
 
 syntax on
@@ -37,7 +40,10 @@ Plugin 'terryma/vim-multiple-cursors'
 Plugin 'bling/vim-airline'
 Plugin 'astashov/vim-ruby-debugger'
 Plugin 'vim-scripts/AutoComplPop'
-"Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'chase/vim-ansible-yaml'
+Plugin 'vim-scripts/Conque-Shell'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'vim-scripts/buffet.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -82,6 +88,12 @@ nnoremap <C-R> <C-W><C-R>
 " Ctrl + x instead of Ctrl-w + x for windows exchange.
 nnoremap <C-X> <C-W><C-X>
 
+" Some remaps to insert a blank line before and after
+" without entering in insert mode (almost)
+nmap <S-Enter> O<Esc> "it doesn't work
+
+nmap <CR> o<Esc>
+
 " RSPEC PLUGIN DEFINITIONS
 " ========================
 
@@ -90,6 +102,9 @@ map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
+
+" Map for buffers explorer
+map <F2> :Bufferlist<CR>
 
 "highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 "match OverLength /\%121v.\+/
