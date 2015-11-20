@@ -44,6 +44,7 @@ Plugin 'chase/vim-ansible-yaml'
 Plugin 'vim-scripts/Conque-Shell'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'vim-scripts/buffet.vim'
+Plugin 'munen/find_yaml_key'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -105,6 +106,9 @@ map <Leader>a :call RunAllSpecs()<CR>
 
 " Map for buffers explorer
 map <F2> :Bufferlist<CR>
+
+" Map to find keys in translations yml
+ca fk FindYamlKey
 
 "highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 "match OverLength /\%121v.\+/
