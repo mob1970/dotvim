@@ -46,7 +46,9 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'vim-scripts/buffet.vim'
 Plugin 'munen/find_yaml_key'
 Plugin 'xolox/vim-easytags'
+Plugin 'xolox/vim-misc'
 Plugin 'ngmy/vim-rubocop'
+
 
 call vundle#end()            " required
 filetype plugin indent on    " required
