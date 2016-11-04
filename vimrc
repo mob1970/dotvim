@@ -45,6 +45,8 @@ Plugin 'vim-scripts/Conque-Shell'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'vim-scripts/buffet.vim'
 Plugin 'munen/find_yaml_key'
+Plugin 'xolox/vim-easytags'
+Plugin 'ngmy/vim-rubocop'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -55,8 +57,12 @@ let mapleader="."
 "let g:ruby_debugger_progname = 'vim'
 "let g:ruby_debugger_debug_mode = 1
 
+" Ctags
+set tags=./tags;
+
 " NERDTree
 map <C-t> :NERDTreeToggle<CR>
+let g:NERDTreeWinSize=50
 "map <C-t> <plug>:NERDTreeTabsToggle<CR>
 "let g:NERDTreeDirArrows=0
 
@@ -84,6 +90,9 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" Mapping for Ctrl-]
+nnoremap <C-D> <C-]>
+
 " Ctrl + r instead of Ctrl-w + r for windows rotation.
 nnoremap <C-R> <C-W><C-R>
 " Ctrl + x instead of Ctrl-w + x for windows exchange.
@@ -110,9 +119,21 @@ map <F2> :Bufferlist<CR>
 " Map to find keys in translations yml
 ca fk FindYamlKey
 
+"let @po="orequire 'pry' ; binding.pry"
+"let @pO="Orequire 'pry' ; binding.pry"
+
 "highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 "match OverLength /\%121v.\+/
 "
 autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1 
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+
+" CtrlP configuration
+set grepprg=ag\ --nogroup\ --nocolor
+" Ignore some folders and files for CtrlP indexing
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.sass-cache$|\.hg$\|\.svn$\|\.yardoc\|public$|log\|tmp$',
+  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
+  \ 
+  \ }
