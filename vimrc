@@ -4,11 +4,15 @@ set shiftwidth=2
 set number
 set expandtab
 
-set clipboard=unnamed
+" set clipboard=unnamed
 
 filetype off                  " required
 
 syntax on
+" colorscheme codeschool
+colorscheme railscasts
+"set background=dark
+"colorscheme gruvbox
 
 autocmd BufWritePre *.rb :%s/\s\+$//e
 
@@ -151,3 +155,5 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_ruby_checkers = ['rubocop', 'mri']
+
+let g:syntastic_ignore_files = ['\.ui', '\.erb', '\.css', '\.scss']
