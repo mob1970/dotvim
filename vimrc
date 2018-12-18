@@ -42,7 +42,6 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'bling/vim-airline'
-Plugin 'astashov/vim-ruby-debugger'
 Plugin 'vim-scripts/AutoComplPop'
 Plugin 'chase/vim-ansible-yaml'
 Plugin 'vim-scripts/Conque-Shell'
@@ -53,6 +52,11 @@ Plugin 'xolox/vim-easytags'
 Plugin 'xolox/vim-misc'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'ngmy/vim-rubocop'
+" Plugin 'joonty/vdebug'
+Plugin 'kmewhort/vim-byebug-breakpoints'
+Plugin 'lmeijvogel/vim-yaml-helper'
+" Plugin 'itchyny/lightline.vim'
+" Plugin 'Einenlum/yaml-revealer'
 
 
 call vundle#end()            " required
@@ -69,7 +73,7 @@ set tags=./tags;
 
 " NERDTree
 map <C-t> :NERDTreeToggle<CR>
-let g:NERDTreeWinSize=50
+let g:NERDTreeWinSize=70
 "map <C-t> <plug>:NERDTreeTabsToggle<CR>
 "let g:NERDTreeDirArrows=0
 
@@ -98,12 +102,31 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " Mapping for Ctrl-]
-nnoremap <C-D> <C-]>
+nnoremap <C-G> <C-]>
 
 " Ctrl + r instead of Ctrl-w + r for windows rotation.
 nnoremap <C-R> <C-W><C-R>
 " Ctrl + x instead of Ctrl-w + x for windows exchange.
 nnoremap <C-X> <C-W><C-X>
+
+"Remove all trailing whitespace by pressing F5
+nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+"
+"Remove all trailing whitespace when saving
+" OLD ONE
+" autocmd BufWritePre * :%s/\s\+$//e
+
+function! <SID>StripTrailingWhitespace()
+  let blacklist=['coffee', 'html', 'erb']
+  let l = line(".")
+  let c = line(".")
+  if index(blacklist, &ft) < 0
+    :%s/\s\+$//e
+  endif
+  call cursor(l, c)
+endfunction
+
+autocmd BufWritePre * :call <SID>StripTrailingWhitespace()
 
 " Some remaps to insert a blank line before and after
 " without entering in insert mode (almost)
@@ -132,18 +155,32 @@ ca fk FindYamlKey
 "highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 "match OverLength /\%121v.\+/
 "
-autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1 
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 
+" thoughtbot vim-rspec
+" let g:rspec_command = "cd advanced_uk ; be rspec {spec} ; cd .."
+
 " CtrlP configuration
 set grepprg=ag\ --nogroup\ --nocolor
+let g:ctrlp_user_command = 'ag %s -l --nocolor -g "."'
+let g:ctrlp_use_caching = 0
+let g:ctrlp_working_path_mode = 0
+
 " Ignore some folders and files for CtrlP indexing
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.swp,*.swo
 let g:ctrlp_custom_ignore = {
   \ 'dir':  '\.git$\|\.sass-cache$|\.hg$\|\.svn$\|\.yardoc\|public$|log\|tmp$',
-  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
-  \ 
+  \ 'file': '\.log$|\.swp$|\.swo$|\.so$\|\.dat$|\.DS_Store$'
+  \
   \ }
+
+" lightline configuration
+set laststatus=2
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ }
 
 " Syntastic configuration
 set statusline+=%#warningmsg#
@@ -151,9 +188,34 @@ set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_enable_signs = 0
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_ruby_exec = '~/.rbenv/shims/ruby' " take the current ruby version specified by rbenv
 let g:syntastic_ruby_checkers = ['rubocop', 'mri']
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exe = 'node_modules/.bin/eslint'
 
-let g:syntastic_ignore_files = ['\.ui', '\.erb', '\.css', '\.scss']
+let g:syntastic_ignore_files = ['\.ui', '\.erb', '\.css', '\.scss', '\.log', '\.rake']
+
+" EasyTags configuration
+let g:easytags_async = 1
+let g:easytags_auto_highlight=0
+
+" NERDcommenter configuration
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Vim YAML Helper configuration
+let g:vim_yaml_helper#auto_display_path = 1
+
+function! ToggleSnakeCamel(str)
+  echo a:str
+  if a:str =~ '_'
+    return substitute(a:str,'\([a-z]\?\)_\([a-z]\)','\1\u\2', 'g')
+  endif
+  return substitute(a:str,'\([A-Z]\+\)', '_\L\1', 'g')
+endfunction
+
+vnoremap ~ y:call setreg('', ToggleSnakeCamel(@"), getregtype(''))<CR>gv""Pgv
