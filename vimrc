@@ -47,13 +47,13 @@ Plugin 'chase/vim-ansible-yaml'
 Plugin 'vim-scripts/Conque-Shell'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'vim-scripts/buffet.vim'
-Plugin 'munen/find_yaml_key'
+" Plugin 'munen/find_yaml_key'
 Plugin 'xolox/vim-easytags'
 Plugin 'xolox/vim-misc'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'ngmy/vim-rubocop'
 " Plugin 'joonty/vdebug'
-Plugin 'kmewhort/vim-byebug-breakpoints'
+" Plugin 'kmewhort/vim-byebug-breakpoints'
 Plugin 'lmeijvogel/vim-yaml-helper'
 " Plugin 'itchyny/lightline.vim'
 " Plugin 'Einenlum/yaml-revealer'
@@ -147,7 +147,7 @@ map <Leader>a :call RunAllSpecs()<CR>
 map <F2> :Bufferlist<CR>
 
 " Map to find keys in translations yml
-ca fk FindYamlKey
+" ca fk FindYamlKey
 
 "let @po="orequire 'pry' ; binding.pry"
 "let @pO="Orequire 'pry' ; binding.pry"
