@@ -112,9 +112,13 @@ nnoremap <C-X> <C-W><C-X>
 "Remove all trailing whitespace by pressing F5
 nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 "
-"Remove all trailing whitespace when saving
-" OLD ONE
-" autocmd BufWritePre * :%s/\s\+$//e
+
+map obp orequire 'pry' ; binding.pry<ESC>
+map Obp Orequire 'pry' ; binding.pry<ESC>
+map mgc O<ESC>O# frozen_string_literal: true<ESC>:w<Enter>
+
+iabbrev bp require 'pry' ; binding.pry
+iabbrev mgc # frozen_string_literal: true
 
 function! <SID>StripTrailingWhitespace()
   let blacklist=['coffee', 'html', 'erb']
@@ -148,9 +152,6 @@ map <F2> :Bufferlist<CR>
 
 " Map to find keys in translations yml
 " ca fk FindYamlKey
-
-"let @po="orequire 'pry' ; binding.pry"
-"let @pO="Orequire 'pry' ; binding.pry"
 
 "highlight OverLength ctermbg=red ctermfg=white guibg=#592929
 "match OverLength /\%121v.\+/
