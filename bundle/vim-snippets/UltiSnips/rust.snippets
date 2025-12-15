@@ -4,65 +4,49 @@
 
 priority -50
 
-snippet fn "A function, optionally with arguments and return type." b
-fn ${1:function_name}(${2})${3/..*/ -> /}${3} {
-	${VISUAL}${0}
+snippet fn "fn name(?) -> ? {}"
+fn ${1:function_name}($2)${3/..*/ -> /}$3 {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet pfn "pub fn name(?) -> ? {}"
+pub fn ${1:function_name}($2)${3/..*/ -> /}$3 {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet afn "async fn name(?) -> ? {}"
+async fn ${1:function_name}($2)${3/..*/ -> /}$3 {
+	${VISUAL}$0
+}
+endsnippet
+
+snippet pafn "pub async fn name(?) -> ? {}"
+pub async fn ${1:function_name}($2)${3/..*/ -> /}$3 {
+	${VISUAL}$0
 }
 endsnippet
 
 snippet pri "print!(..)" b
-print!("${1}"${2/..*/, /}${2});
+print!("$1"${2/..*/, /}$2);
 endsnippet
 
 snippet pln "println!(..)" b
-println!("${1}"${2/..*/, /}${2});
+println!("$1"${2/..*/, /}$2);
 endsnippet
 
 snippet fmt "format!(..)"
-format!("${1}"${2/..*/, /}${2});
+format!("$1"${2/..*/, /}$2);
 endsnippet
 
-snippet macro "macro_rules!" b
-macro_rules! ${1:name} (
-	(${2:matcher}) => (
-		${3}
-	)
-)
+snippet .it ".iter()" i
+.iter()$0
 endsnippet
 
-snippet mod	 "A module" b
-mod ${1:`!p snip.rv = snip.basename.lower() or "name"`} {
-	${VISUAL}${0}
-}
-endsnippet
-
-snippet for "for .. in .." b
-for ${1:i} in ${2:${3:0us}..${4:10}} {
-	${VISUAL}${0}
-}
-endsnippet
-
-snippet todo "A Todo comment"
-// [TODO]: ${1:Description} - `!v strftime("%Y-%m-%d %I:%M%P")`
-endsnippet
-
-snippet st "Struct" b
-struct ${1:`!p snip.rv = snip.basename.title() or "Name"`} {
-	${VISUAL}${0}
-}
-endsnippet
-
-snippet stn "Struct with new constructor." b
-pub struct ${1:`!p snip.rv = snip.basename.title() or "Name"`} {
-	${3}
-}
-
-impl $1 {
-	pub fn new(${2}) -> $1 {
-		${4}return $1 {
-			${5}
-		};
-	}
+snippet impl "Struct/Trait implementation" b
+impl$4 ${1:Type/Trait}${2: for ${3:Type}}${4:<${5:T}>} {
+	${0}
 }
 endsnippet
 

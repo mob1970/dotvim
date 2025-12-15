@@ -22,7 +22,7 @@ elseif !exists("b:eruby_subtype") && main_syntax == 'eruby'
   let s:lines = getline(1)."\n".getline(2)."\n".getline(3)."\n".getline(4)."\n".getline(5)."\n".getline("$")
   let b:eruby_subtype = matchstr(s:lines,'eruby_subtype=\zs\w\+')
   if b:eruby_subtype == ''
-    let b:eruby_subtype = matchstr(substitute(expand("%:t"),'\c\%(\.erb\|\.eruby\|\.erubis\)\+$','',''),'\.\zs\w\+\%(\ze+\w\+\)\=$')
+    let b:eruby_subtype = matchstr(substitute(expand("%:t"),'\c\%(\.erb\|\.eruby\|\.erubis\|\.example\)\+$','',''),'\.\zs\w\+\%(\ze+\w\+\)\=$')
   endif
   if b:eruby_subtype == 'rhtml'
     let b:eruby_subtype = 'html'
@@ -41,13 +41,17 @@ elseif !exists("b:eruby_subtype") && main_syntax == 'eruby'
 endif
 
 if !exists("b:eruby_nest_level")
-  let b:eruby_nest_level = strlen(substitute(substitute(substitute(expand("%:t"),'@','','g'),'\c\.\%(erb\|rhtml\)\>','@','g'),'[^@]','','g'))
+  if &syntax =~# '\<eruby\.eruby\>'
+    let b:eruby_nest_level = strlen(substitute(substitute(&filetype,'\C\<eruby\>','@','g'),'[^@]','','g'))
+  else
+    let b:eruby_nest_level = strlen(substitute(substitute(substitute(expand("%:t"),'@','','g'),'\c\.\%(erb\|rhtml\)\>','@','g'),'[^@]','','g'))
+  endif
 endif
 if !b:eruby_nest_level
   let b:eruby_nest_level = 1
 endif
 
-if exists("b:eruby_subtype") && b:eruby_subtype != ''
+if exists("b:eruby_subtype") && b:eruby_subtype != '' && b:eruby_subtype !=? 'eruby'
   exe "runtime! syntax/".b:eruby_subtype.".vim"
   unlet! b:current_syntax
 endif

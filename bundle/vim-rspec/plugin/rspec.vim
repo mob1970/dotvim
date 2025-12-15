@@ -7,31 +7,34 @@ if !exists("g:rspec_runner")
 endif
 
 function! RunAllSpecs()
-  let s:last_spec_location = "spec"
-  call s:RunSpecs(s:last_spec_location)
+  let s:last_spec = ""
+  call s:RunSpecs(s:last_spec)
 endfunction
 
 function! RunCurrentSpecFile()
   if s:InSpecFile()
-    let s:last_spec_location = s:CurrentFilePath()
-    call s:RunSpecs(s:last_spec_location)
-  else
-    call RunLastSpec()
+    let s:last_spec_file = s:CurrentFilePath()
+    let s:last_spec = s:last_spec_file
+    call s:RunSpecs(s:last_spec_file)
+  elseif exists("s:last_spec_file")
+    call s:RunSpecs(s:last_spec_file)
   endif
 endfunction
 
 function! RunNearestSpec()
   if s:InSpecFile()
-    let s:last_spec_location = s:CurrentFilePath() . ":" . line(".")
-    call s:RunSpecs(s:last_spec_location)
-  else
-    call RunLastSpec()
+    let s:last_spec_file = s:CurrentFilePath()
+    let s:last_spec_file_with_line = s:last_spec_file . ":" . line(".")
+    let s:last_spec = s:last_spec_file_with_line
+    call s:RunSpecs(s:last_spec_file_with_line)
+  elseif exists("s:last_spec_file_with_line")
+    call s:RunSpecs(s:last_spec_file_with_line)
   endif
 endfunction
 
 function! RunLastSpec()
-  if exists("s:last_spec_location")
-    call s:RunSpecs(s:last_spec_location)
+  if exists("s:last_spec")
+    call s:RunSpecs(s:last_spec)
   endif
 endfunction
 
@@ -74,7 +77,7 @@ function! s:CurrentFilePath()
 endfunction
 
 function! s:GuiCommand(command)
-  return "silent !" . s:plugin_path . "/bin/" . g:rspec_runner . " '" . a:command . "'"
+  return "silent ! '" . s:plugin_path . "/bin/" . g:rspec_runner . "' '" . a:command . "'"
 endfunction
 
 function! s:ClearCommand()

@@ -25,38 +25,37 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-Plugin 'tpope/vim-rails'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-surround'
+Plugin 'arcticicestudio/nord-vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'thoughtbot/vim-rspec'
-Plugin 'tpope/vim-fugitive'
 Plugin 'altercation/vim-colors-solarized'
 Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
+Plugin 'mattn/emmet-vim'
 Bundle 'garbas/vim-snipmate'
 Bundle 'honza/vim-snippets'
-Bundle 'craigemery/vim-autotag'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'bling/vim-airline'
-Plugin 'vim-scripts/AutoComplPop'
 Plugin 'chase/vim-ansible-yaml'
-Plugin 'vim-scripts/Conque-Shell'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'ngmy/vim-rubocop'
+Plugin 'lmeijvogel/vim-yaml-helper'
+Plugin 'OmniSharp/omnisharp-vim'
+Bundle 'tomtom/tlib_vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-surround'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'vim-scripts/AutoComplPop'
 Plugin 'vim-scripts/buffet.vim'
-" Plugin 'munen/find_yaml_key'
+Plugin 'vim-scripts/Conque-Shell'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'wfleming/vim-codeclimate'
 Plugin 'xolox/vim-easytags'
 Plugin 'xolox/vim-misc'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'ngmy/vim-rubocop'
-" Plugin 'joonty/vdebug'
-" Plugin 'kmewhort/vim-byebug-breakpoints'
-Plugin 'lmeijvogel/vim-yaml-helper'
-" Plugin 'itchyny/lightline.vim'
-" Plugin 'Einenlum/yaml-revealer'
+Plugin 'ludovicchabant/vim-gutentags'
 
 
 call vundle#end()            " required
@@ -64,9 +63,8 @@ filetype plugin indent on    " required
 
 let mapleader="."
 
-" Vim ruby debugger
-"let g:ruby_debugger_progname = 'vim'
-"let g:ruby_debugger_debug_mode = 1
+" Include buffer operations in clipboardpboard
+set clipboard=unnamed
 
 " Ctags
 set tags=./tags;
@@ -101,6 +99,12 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" Row up/down movement
+nnoremap <S-Up> :m-2<CR>
+nnoremap <S-Down> :m+<CR>
+inoremap <S-Up> <Esc>:m-2<CR>
+inoremap <S-Down> <Esc>:m+<CR>
+
 " Mapping for Ctrl-]
 nnoremap <C-G> <C-]>
 
@@ -112,9 +116,12 @@ nnoremap <C-X> <C-W><C-X>
 "Remove all trailing whitespace by pressing F5
 nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 "
-
 map obp orequire 'pry' ; binding.pry<ESC>
 map Obp Orequire 'pry' ; binding.pry<ESC>
+
+map odb odebugger;<ESC>
+map Odb Odebugger;<ESC>
+
 map mgc O<ESC>O# frozen_string_literal: true<ESC>:w<Enter>
 
 iabbrev bp require 'pry' ; binding.pry
@@ -148,7 +155,7 @@ map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
 
 " Map for buffers explorer
-map <F2> :Bufferlist<CR>
+map <C-w> :Bufferlist<CR>
 
 " Map to find keys in translations yml
 " ca fk FindYamlKey
@@ -191,7 +198,7 @@ set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_enable_signs = 0
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_ruby_exec = '~/.rbenv/shims/ruby' " take the current ruby version specified by rbenv
 let g:syntastic_ruby_checkers = ['rubocop', 'mri']
@@ -211,6 +218,9 @@ let g:NERDSpaceDelims = 1
 " Vim YAML Helper configuration
 let g:vim_yaml_helper#auto_display_path = 1
 
+" Snipmate
+let g:snipMate = { 'snippet_version' : 1 }
+
 function! ToggleSnakeCamel(str)
   echo a:str
   if a:str =~ '_'
@@ -220,3 +230,24 @@ function! ToggleSnakeCamel(str)
 endfunction
 
 vnoremap ~ y:call setreg('', ToggleSnakeCamel(@"), getregtype(''))<CR>gv""Pgv
+
+" Omnisharp configuration
+inoremap <expr> <Tab> pumvisible() ? '<C-n>' :
+\ getline('.')[col('.')-2] =~# '[[:alnum:].-_#$]' ? '<C-x><C-o>' : '<Tab>'
+
+" let g:OmniSharp_server_stdio = 0
+let g:OmniSharp_server_use_mono = 1
+
+nnoremap <C-o><C-u> :OmniSharpFindUsages<CR>
+nnoremap <C-o><C-d> :OmniSharpGotoDefinition<CR>
+nnoremap <C-o><C-d><C-p> :OmniSharpPreviewDefinition<CR>
+nnoremap <C-o><C-r> :!dotnet run
+
+" vim-fold-rspec
+let g:fold_rspec_foldenable = 0          " disables folding (toggle with `zi`)
+let g:fold_rspec_foldlevel = 2           " sets initial open/closed state of all folds (open unless nested more than two levels deep)
+let g:fold_rspec_default_foldcolumn = 4  " shows a 4-character column on the lefthand side of the window displaying the document's fold structure
+let g:fold_rspec_foldclose = 'all'       " closes folds automatically when the cursor is moved out of them (only applies to folds deeper than 'foldlevel')
+let g:fold_rspec_foldminlines = 3        " disables closing of folds containing two lines or fewer
+
+let g:ruby_fold_lines_limit = 200

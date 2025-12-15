@@ -68,6 +68,15 @@ terminal.
 let g:rspec_runner = "os_x_iterm"
 ```
 
+If you use the iTerm2 nightlies, the `os_x_iterm` runner will not work
+(due to AppleScript incompatibilities between the old and new versions of iTerm2).
+
+Instead use the `os_x_iterm2` runner, configure it like so:
+
+```vim
+let g:rspec_runner = "os_x_iterm2"
+```
+
 ## Running tests
 
 Tests are written using [`vim-vspec`](https://github.com/kana/vim-vspec)
@@ -84,9 +93,9 @@ rake
 Credits
 -------
 
-![thoughtbot](http://thoughtbot.com/images/tm/logo.png)
+![thoughtbot](https://thoughtbot.com/logo.png)
 
-rspec.vim is maintained by [thoughtbot, inc](http://thoughtbot.com/community)
+rspec.vim is maintained by [thoughtbot's Vim enthusiasts](https://thoughtbot.com/upcase/vim)
 and [contributors](https://github.com/thoughtbot/vim-rspec/graphs/contributors)
 like you. Thank you!
 
@@ -95,7 +104,7 @@ Software](https://www.destroyallsoftware.com/screencasts) screencasts.
 
 ## License
 
-rspec.vim is copyright © 2014 thoughtbot. It is free software, and may be
+rspec.vim is copyright © 2016 thoughtbot. It is free software, and may be
 redistributed under the terms specified in the `LICENSE` file.
 
 The names and logos for thoughtbot are trademarks of thoughtbot, inc.
